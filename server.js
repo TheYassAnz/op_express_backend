@@ -1,9 +1,11 @@
 const http = require('http');
 
-// Create an HTTP server that returns a simple 'Hello World' message
-const server = http.createServer((req, res) => {
-    res.end('Hello World\n');
-});
+// Import the Express application
+const app = require('./app');
+
+// Create an HTTP server
+app.set('port', process.env.PORT || 3000);
+const server = http.createServer(app);
 
 // Start the server on port 3000
 server.listen(process.env.PORT || 3000);
