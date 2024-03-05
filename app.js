@@ -51,6 +51,13 @@ app.put('/api/stuff/:id', (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
 });
 
+// Middleware for DELETE request
+app.delete('/api/stuff/:id', (req, res, next) => {
+    Thing.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Object deleted successfully!' }))
+        .catch((error) => res.status(400).json({ error }));
+})
+
 // Middleware which return information of a specific stuff
 app.get('/api/stuff/:id', (req, res, next) => {
     Thing.findOne({ _id: req.params.id })
