@@ -3,6 +3,9 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
+// Middleware which intercept JSON data
+app.use(express.json());
+
 // Headers to prevent CORS errors
 app.use((req, res, next) => {
     // Set the headers to allow requests from any origin
@@ -13,8 +16,14 @@ app.use((req, res, next) => {
     next();
 });
 
+// Middleware which intercept POST requests
+app.post('/api/stuff', (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({ message: 'POST request received successfully!' });
+})
+
 // Create a middleware who return stuff information
-app.use('/api/stuff', (req, res, next) => {
+app.get('/api/stuff', (req, res, next) => {
     const stuff = [
         {
             _id: 'oeihfzeoi',
