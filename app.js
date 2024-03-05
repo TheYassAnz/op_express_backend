@@ -2,6 +2,10 @@ const express = require('express');
 
 // Import mongoose
 const mongoose = require('mongoose');
+
+// Import the model Thing
+const Thing = require('./models/Thing');
+
 mongoose.connect('mongodb+srv://yassine_anzarbasha:Cqy42zXhAPil04v4@ocexpresstraining.xd0o2xj.mongodb.net/?retryWrites=true&w=majority&appName=ocExpressTraining',
     {
         useNewUrlParser: true,
@@ -28,8 +32,16 @@ app.use((req, res, next) => {
 
 // Middleware which intercept POST requests
 app.post('/api/stuff', (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({ message: 'POST request received successfully!' });
+    // Delete the ID sent by the client
+    delete req.body._id;
+    // Create an instance and receive POST data
+    const thing = new Thing({
+        ...req.body
+    });
+    // Save the thing in the DB
+    thing.save()
+        .then(() => res.status(201).json({ message: 'Object saved successfully!' }))
+        .catch(error => res.status(400).json({ error }));
 })
 
 // Create a middleware who return stuff information
