@@ -3,6 +3,16 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
+// Headers to prevent CORS errors
+app.use((req, res, next) => {
+    // Set the headers to allow requests from any origin
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    // Set the headers to allow the following methods
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+
 // Create a middleware who return stuff information
 app.use('/api/stuff', (req, res, next) => {
     const stuff = [
