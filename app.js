@@ -3,27 +3,28 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
-// Create a simple middleware
-app.use((req, res, next) => {
-    console.log('Request received !');
-    next();
-});
-
-// Middleware which changes the state of the response
-app.use((req, res, next) => {
-    res.status(201);
-    next();
-})
-
-// Return a JSON response object
-app.use((req, res, next) => {
-    res.json({ message: 'Hello, world' });
-    next();
-});
-
-// Simple middleware
-app.use((req, res) => {
-    console.log('Response sent !');
+// Create a middleware who return stuff information
+app.use('/api/stuff', (req, res, next) => {
+    const stuff = [
+        {
+            _id: 'oeihfzeoi',
+            title: 'Mon premier objet',
+            description: 'Les infos de mon premier objet',
+            imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+            price: 4900,
+            userId: 'qsomihvqios',
+        },
+        {
+            _id: 'oeihfzeomoihi',
+            title: 'Mon deuxième objet',
+            description: 'Les infos de mon deuxième objet',
+            imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+            price: 2900,
+            userId: 'qsomihvqios',
+        },
+    ];
+    // Return the stuff in JSON format
+    res.status(200).json(stuff);
 })
 
 // Export the application
