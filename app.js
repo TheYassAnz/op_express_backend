@@ -3,8 +3,8 @@ const express = require('express');
 // Import mongoose
 const mongoose = require('mongoose');
 
-// Import the model Thing
-const Thing = require('./models/Thing');
+// import routes
+const stuffRoutes = require('./routes/stuff')
 
 mongoose.connect('mongodb+srv://yassine_anzarbasha:Cqy42zXhAPil04v4@ocexpresstraining.xd0o2xj.mongodb.net/?retryWrites=true&w=majority&appName=ocExpressTraining',
     {
@@ -30,48 +30,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware which intercept POST requests
-app.post('/api/stuff', (req, res, next) => {
-    // Delete the ID sent by the client
-    delete req.body._id;
-    // Create an instance and receive POST data
-    const thing = new Thing({
-        ...req.body
-    });
-    // Save the thing in the DB
-    thing.save()
-        .then(() => res.status(201).json({ message: 'Object saved successfully!' }))
-        .catch(error => res.status(400).json({ error }));
-})
-
-// Middleware for PUT request
-app.put('/api/stuff/:id', (req, res, next) => {
-    Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Object updated successfully!' }))
-        .catch((error) => res.status(400).json({ error }));
-});
-
-// Middleware for DELETE request
-app.delete('/api/stuff/:id', (req, res, next) => {
-    Thing.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Object deleted successfully!' }))
-        .catch((error) => res.status(400).json({ error }));
-})
-
-// Middleware which return information of a specific stuff
-app.get('/api/stuff/:id', (req, res, next) => {
-    Thing.findOne({ _id: req.params.id })
-        .then(thing => res.status(200).json(thing))
-        .catch(error => res.status(404).json({ error }));
-});
-
-// Create a middleware who return stuff information
-app.get('/api/stuff', (req, res) => {
-    // Return things array with the find method
-    Thing.find()
-        .then(things => res.status(200).json(things))
-        .catch(error => res.status(400).json({ error }));
-})
+// Middleware for stuff
+app.use('/api/stuff', stuffRoutes);
 
 // Export the application
 module.exports = app;
