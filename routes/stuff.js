@@ -1,6 +1,9 @@
 // import express
 const express = require('express');
 
+// import auth middleware
+const auth = require('../middleware/auth');
+
 // create a router
 const router = express.Router();
 
@@ -11,19 +14,19 @@ const Thing = require('../models/Thing');
 const stuffCtrl = require('../controllers/stuff.js');
 
 // Middleware which intercept POST requests
-router.post('/', stuffCtrl.createThing);
+router.post('/', auth, stuffCtrl.createThing);
 
 // Middleware for PUT request
-router.put('/:id', stuffCtrl.modifyThing);
+router.put('/:id', auth, stuffCtrl.modifyThing);
 
 // Middleware for DELETE request
-router.delete('/:id', stuffCtrl.deleteThing);
+router.delete('/:id', auth, stuffCtrl.deleteThing);
 
 // Middleware which return information of a specific stuff
-router.get('/:id', stuffCtrl.getOneThing);
+router.get('/:id', auth, stuffCtrl.getOneThing);
 
 // Create a middleware who return stuff information
-router.get('', stuffCtrl.getAllStuff);
+router.get('', auth, stuffCtrl.getAllStuff);
 
 // export the router
 module.exports = router;
