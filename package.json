@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TheYassAnz/op_express_backend#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
     "mongoose": "^8.2.1",
     "mongoose-unique-validator": "^5.0.0"

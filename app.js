@@ -4,7 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // import routes
-const stuffRoutes = require('./routes/stuff')
+const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://yassine_anzarbasha:Cqy42zXhAPil04v4@ocexpresstraining.xd0o2xj.mongodb.net/?retryWrites=true&w=majority&appName=ocExpressTraining',
     {
@@ -32,6 +33,9 @@ app.use((req, res, next) => {
 
 // Middleware for stuff
 app.use('/api/stuff', stuffRoutes);
+
+// Middleware for authentification
+app.use('/api/auth', userRoutes);
 
 // Export the application
 module.exports = app;
