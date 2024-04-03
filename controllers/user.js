@@ -1,5 +1,6 @@
 // import user model
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 exports.signup = (req, res, next) => {
     // crypt password with 10 rounds salt
@@ -13,9 +14,9 @@ exports.signup = (req, res, next) => {
             // save the user in the database
             user.save()
                 .then(() => res.status(201).json({ message: 'User created!' }))
-                .catch(err => res.status(400).json({ err }));
+                .catch(error => res.status(400).json({ error }));
         })
-        .catch(err => res.status(500).json({ err }));
+        .catch(error => res.status(50).json({ error }));
 }
 
 
@@ -44,4 +45,11 @@ exports.login = (req, res, next) => {
         }
         )
         .catch(err => res.status(500).json({ err }))
+}
+
+// controller to get users
+exports.getUsers = (req, res, next) => {
+    User.find()
+        .then(users => res.status(200).json(users))
+        .catch(error => res.status(400).json({ error }));
 }

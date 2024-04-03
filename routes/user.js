@@ -13,5 +13,8 @@ router.post('/signup', userCtrl.signup);
 // Middleware for login
 router.post('/login', userCtrl.login);
 
+// Route GET /users
+router.get('', userCtrl.getUsers);
+
 // export the router
 module.exports = router;
