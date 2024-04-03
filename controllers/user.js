@@ -1,6 +1,7 @@
 // import user model
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
     // crypt password with 10 rounds salt
