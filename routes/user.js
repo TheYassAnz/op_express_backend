@@ -16,5 +16,8 @@ router.post('/login', userCtrl.login);
 // Route GET /users
 router.get('', userCtrl.getUsers);
 
+// Route DELETE /users/:id
+router.delete('/:id', userCtrl.deleteUser);
+
 // export the router
 module.exports = router;
